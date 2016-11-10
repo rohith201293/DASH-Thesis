@@ -1,0 +1,232 @@
+
+
+#Dynamic Adaptive  Streaming over  HTTP.
+
+#Final  Report
+
+
+Table of Contents:
+
+1.	INTRODUCTION
+2.	What’s DASH all about?
+3.	DESIGN PRINCIPLES
+4.	PROTOCOL APPROACH
+5.	Content Generation
+6.	DASH DATASET
+7.	DISTRIBUTED DASH DATASET
+8.	ENVIRONMENT AWAREDASH
+9.	A Test-Bed for Dynamic Adaptive Streaming over HTTP featuring Session Mobility
+10.	An Evaluation of Dynamic Adaptive streaming over HTTP in Vehicular Environments
+11.	Simulation of Adaptive Streaming over HTTP using JW Player
+12.	A VLC Media Player Plugin enabling Dynamic Adaptive Streaming over HTTP
+13.	Measuring DASH Streaming Performance from the End Users Perspective Using Neubot Ultrahigh Definition HEVC DASH Data Set
+14.	 Ultrahigh Definition HEVC DASH Data Set
+15.	Conclusion
+
+
+
+
+
+1)	INTRODUCTION:
+In the olden days, when the websites were first launched, the texts were embedded in them, later, pictures, animation GIF were embedded, now it has been transferred to music videos and High definition videos. They have been outspreaded to devices like smart phones tablets etc. In the recent years, the use of the smart phone etc. has gradually increased from 2009-2014 it gradually increased and 66% is being used for the video streaming through mobiles. So, user expect high quality, bandwidth. Now a days it has become a necessity than a feature for web. Although it has been embraced by the biggest websites, even it has a flaws. The streaming over the TCP had become omnipresent in further consequences. Like Netflix, Hulu do not deploy own streaming system but uses internet infrastructure which works better than CDN’s.
+Now a days, video streaming is provided using the existing internet infrastructure. Internet is not designed for the real time streaming. It is designed for the delivery of the files. Caches, proxies and content distribution networks(CDN) are used for efficient file transfer. Now, the existing technologies are unable to take advantage of this infrastructures since they are developed for file transfer and not for video streaming. Moreover, RTP cannot pass through the firewall etc. so, they used an alternative called progressive download. As the name says it is not the true streaming but kind of a download, progressive download uses HTTP. So, it is stateless and client pulls the data from the server where as in RTP server pushes data to the client. HTTP can pass through the firewalls.
+The standard to handle varying bandwidth was based on 3GPP as Adaptive HTTP streaming. The idea is to break the file into equal segments and stored in web server and can be accessed through HTTP get request. The client fully controls streaming media on segment basis. Through which client can know bandwidth requirements.  The 3GPP introduced Media Presentation document to provide media segments and corresponding bitrates. This MPD is a XML which consists of the location of each segment basically a URL. MPD is the first one to be downloaded to provide details to start the session and dynamically adaptive bandwidth fluctuations. Many others in like Microsoft smooth streaming and others use same kind of MPD and follow a same kind of architecture.ISO/IEC MPEG has worked on DASH which is meant to combine all the features in a single standard. It is designed to handle changing bandwidth
+Real-time entertainment is predicted to be around 70% in 2017 in both wired and wireless environments among which major part is dedicated to video browsing. A distributed data set is presented for MPEG-DASH standard which is the recently published. During multimedia delivery over HTTP system, the client selects the media representation based on user context and current condition. An intelligent client may choose to switch segments from different location dynamically, if the currently used one causes any issues. 
+So, Dynamic Adaptive streaming over HTTP is being used to take full advantage of this optimized web content delivery.
+
+2)	What’s DASH all about?
+DASH is all about providing video streaming to the internet user in an adaptive way. Usually, users do not have a fixed line of bandwidth so, they cannot be able to download the data, and here DASH comes into play. It divides the file into small pieces. The file is segmented using a Segmenter. Segmenter is part of HTTP pseudostreaming in which video delivery includes a preparation stage. More particularly, DASH includes the Media Preparation Description (MPD) and file format definition. MPD includes wide variety of operations and particular server address.
+3rd Generation Partnership Project (3GPP) took over the standardization of the DASH process with the participation of the 3GPP, the files are converted to .3gp format. After the file is converted, all MPD information is stored in multiple files in the form of XML. Server is responsible for storing and streaming based on these XML files.
+3)	DESIGN PRINCIPLES
+The Design Consists of a media preparations which converts the media into several formats and sends to the origin servers along with MPD. Based on this media presentation description (MPD) describes the relation of segments and how to perform. HTTP content distributed networks(CDN) have used serve web pages, offloading origin servers reducing download latency. The use of CDN and reduce the operational cost and elimination decisions about resource provisioning on the nodes.
+The reasons for selecting HTTP-based for streaming is:
+•	It is growing widely for a delivery of internet video streaming.
+•	It provides easy and effortless streaming
+•	It provides reliability as HTTP and TCP/IP are widely implemented.
+•	HTTP based provides ability to use HTTP caches to deliver the content.
+•	It allows user to select the video quality based on the available bandwidth.
+•	It provides a simple means to seamlessly change content rate  to change in the bandwidth
+•	It has ability to accelerate fixed mobile converge for streaming.
+
+3GPP has taken an initiative to specify Dynamic adaptive streaming solution for the existing RTSP and HTTP based. It is designed to support delivery of media binds in ISO base media file and to address delivery where there is no interaction with user.
+
+4)	PROTOCOL APPROACH:
+HTTP is being used for video streaming. A protocol approach should be materialized in so show how DASH take advantages of the infrastructure. Internet protocol transfers datagram packets over the network. So, it plays a keystone and TCP provides Interconnectivity with no packet loss. Through a TCP, A video is downloaded and viewed which will be helpful to view video where ever you want to view. RTMP (real Time Messaging Protocol) it is just like as a TCP allows the user to view the video from where ever user wants to. HTTP provides the connection to               World Wide Web. It is responsible for all the files available on web.
+HTTP contains two protocols which request and response. The Request is sent from the client to the server and the user gets the response from the server. It is helpful for the retrieving a file from the server. The HTTP is superior in firewall protocols. And it assigns a unique connections to each client and terminate it without saving any recent information.
+5)	Content Generation:
+For DASH, they have developed a DASH Encoder. Using the DASH Encoder, user need not to select the quality of the video, but is automatically done by the Encoder, with desired quality based on the Configuration file provided by the Encoder which can be a MP4 or MPD etc. By this user can have a wide choices for the content generation which includes encoding settings, bite rate etc., The DASH Encoder is available open source. Even other video codec’s and/orcontainer formats can be integrated with this.e.g., the Adobe packaging tool uses DASHEncoder with x264 for the MPD generation.Based onthese separate MPDs, DASH Encoder software generates a combined MPD file.This MPD file fits to the generatedfile structure of the DASH Encoder and the provided URL.In order to retrieve the best suitable bitrate vs. resolution configuration we have to analyze PSNR values of the encoded content.For this wedecoded the encoded videos with ffmpeg.video
+During the recent testing’s on web server configurations, they found that hosting provider’s sites provides two type connections. They are persistent connections which allows the use of connections and some stops the reuse of connections. These differences in the web server configurations leads us to analyze more on the impact of segment lengths and streaming performance
+Evaluation Setup:
+The evaluation setup is carried out by setting up a testing environment internet connections. For this testing environment connections, they used a standard Apache Web Server as a main source for the DASH streaming scenario. The client for this DASH streaming scenario is a DASH client which is a modified version of the DASH VLC plugin. Not only the DASH client, but also uses the two Ubuntu Nodes which are network emulation which emulates the internet service provider and the other one is traffic shaping which simulates the fluctuations of bandwidth conditions. 
+Our analysis showed a significant performance falloff by streaming from a Web server which does not allow determined connection, more importantly for short segments lengths like 2 seconds or less. One needs about the double bandwidth of the media bitrate to attain a adequate performance.Streaming without determined connections results in a significantly higher bandwidth demand and the average media bit rate in our evaluation of 2-seconds segment is about 34% lower than using persistent connections. Segment sizes more than 6 seconds are not influenced so much by the connection settings of the Web server. In a nutshell, they evaluated the optimal segment size of our network configuration scenario for both cases, with and without persistent connections. Therefore, we analyzed the performance at different time intervals like 1, 2, 4, 6, 10 and 15 seconds segment length of Big Buck Bunny of our dataset.
+
+6)	DASH DATASET:
+The quality level varies for different types of videos, for sport and movies the quality increases and for animation it decreases. When providing content for adaptive streaming the length of the segments is important and also the shorter segments and longer segments are the segments which are present where the shorter one may provide larger overhead in terms of request and in other way the longer one it is not very much close to the environment so it occurs bandwidth fluctuations. The maximum quality for sports and movie genre have 8 MB/sec.
+The quality of the video need not match bit rates and this may lead to changes in efficiency b/w high and low motion scenes. We use only PSNR values because due to adjustment of bit rate by using DASH.
+Each segment length version of video sums up to get more than 1.7 million PSNR values and those values are useful for video to determine the length of the video. 
+The main advantage of dataset is to enable the comparison of research results across different institutions that are working and also the data set can be used for different purposes and due to this the comparison should be made between two stream switching algorithms like MPEG and DASH.
+ The First DASH dataset comprises different genres which is designed for DASH based evaluations where it consists videos from 10 – 90 minutes where every video in this data set has various segment lengths the same with representations which range from 50kbit/sec and we provide PSNR values for each and every frame of the big buck representations.   To encode this dataset a convenient content generation tool called DASHencoder is used, which also shows the enabled/disabled persistent connections of servers to streaming performance of DASH.
+
+7)	DISTRIBUTED DASH DATASET 
+The performance of DASH-based streaming is influenced by network characteristics such as the round trip time (RTT) and HTTP server configurations. So, DASH content is provided with different segment lengths of 2, 4, 6, 10, and 15 seconds. For each segment length the content is encoded at 17 different video representations, ranging from 100kbps to 320*240 up to 6 Mbps at 1920*1080.
+Main Repository and Distribution:
+The dataset is open for new participants. The website also shows the status of participating sites:
+•	Registered for new participants whose mirror needs to be verified;
+•	Active for verified mirrors up and running;
+•	Inactive for sites which are unavailable, have incomplete replicas, or are not up-to-date.
+Additional Repositories:
+Paris, France and Prague Czech republic are the two mirror locations for the datasets used. The goals of the QUALINET and its Working Group (Databases and Validation) is to create a database of proper multimedia content and take the steps to make it accessible to all researchers.The described databases can be divided into three main categories: 
+•	Annotated multimedia quality databases,
+•	eye tracking databases, and 
+•	Other databases.
+
+8)	ENVIRONMENT AWAREDASH: 
+An existing DASH is attached with EnvDASH system as an extension. The used DASH client uses a buffer-based network adaptation approach to adjust video representations according to the current network speed. Adaptations are executed based on the highest possible representation which bitrate is below the current download speed. Different adaptation schemes 
+1.	User’s interest,
+2.	Stability of the device and
+3.	Ambient noise level are described in the remaining subsections.
+Adapting to the User’s Interest: Mostly mobile users do not concentrate on currently streaming video. During this time streaming a high quality video would waste a data volume. Front-facing camera of a smartphone in combination with a face detection and tracking algorithm is used to retrieve the information whether a user is interested in a video stream at a speciﬁc point in time or not. Quality of streaming is slowly decreased as long as no face can be detected. When users are not watching the video stream over a longer time a slow but increasing reduction of the video representation is chosen in order to reduce the impact of short losses of user’s interest, but signiﬁcantly increases the bandwidth savings. When the face detection algorithm is not performing reliably (e.g. brightness changes) a threshold of TUI = 5s is chosen in order to compensate for situations.
+Adapting to the Stability of a Device: A shaking device inﬂuences whether a user is able to consume high quality video, as long as shaking is detected, the device continuously reduces the quality of the next video segment. A slow decrease of the video representations is preferred in contrast to large jumps in order to avoid a high degradation of the perceived quality if the device is shaking for a short time. Samples (m) are collected using a sliding window. This window can identify two consecutive changes in the direction which is measured as cd. If the absolute impact of the direction changes exceeds the threshold Tabs, the counter is increasedto avoid the impact of small shakes on adaptation behavior. To distinguish viewing conditions with unperceivable shakes (MOS ≥ 3.5) from unstable ones (MOS < 3.5) a threshold of 3.5 is used.
+Adapting to the Ambient Noise Level:  Not only video track, audio track can also be used to save network traffic. If the sound of ambient noise is higher than threshold Tnoise retrieving the sound track is very tough. This ambient noise can be identified by using phones microphone. If the ambient noise is exceeds threshold level, then recorded noise segments is converted into the uniﬁed and standardized unit of decibel (dB (A)).
+USER FEEDBACK ON ADAPTATION:
+Customization of the adaptation during playback as user’s preferences are different and some users may not accept the adaptation or thresholds deﬁned.An adaptation is always indicated by the front LED. Red illustrates a decrease in quality whereas green illustrates an increase of quality. Costumer can also reject the adaptation by swiping from right to left. In case of rejection upcoming DASH segments to a switch to the representation index prior to the adaptation.
+EVALUATION:
+18 test subjects are used to test the EnvDASH system.These test are run during a mobile streaming scenario on google nexus 5 smartphone. The video sequence is re-encoded in differing framerates (5 and 30 fps), resolutions (from 320x240 to Full HD) and bitrates (75 kbit/s to 7.2 Mbit/s) resulting in multiple representations. The audio tracks are encoded at 64 kbit/s, 96 kbit/s, 128 kbit/s and 256 kbit/s. The segment duration is set to 2 seconds. Without the EnvDASH system the test time would have used up 13.42 GB. 
+Network Load Reduction:The results of the evaluation represents that 8.2% of video playback can be played back with lower quality representation. And the user’s interest algorithm calculated that for 53minutes there is no face detection. The average network bandwidth saved over all users is calculated as 5.3% which is 12.7GB by using EnvDASH system. Bandwidth saving can vary with different kinds of users and adaptations. Signiﬁcant network gains can be achieved by degraded viewing conditions or the loss of user’s interest which last long
+Precision of the Algorithms:Data from the gravity sensor and the ambient sound level is determined to create a ground truth on the device shaking and ambient noise level.This data is used to determine when the adaptation is accepted by the user or classified as error. The proposed algorithms show high accuracy and precision, which indicates that the internal sensors in combination with appropriate algorithms are adequate to predict environmental conditions during a streaming session. Due to high varying noise levels ambient noise level is introducing false hits.
+
+9)	A Test-Bed for Dynamic Adaptive Streaming over HTTP featuring Session Mobility
+Streaming over HTTP has become more these days because of two reasons. First is reasonable internet connectivity and second is firewall issues. It can pass through firewalls.  In order to provide interoperability organizations like MPEG has recognized for need of international open standards, they used one of those standards in this paper. This paper address need for the leveraging existing media repositories and enabling session mobility. For this they developed a test-bed for DASH which enables the session mobility in interoperable way. Universal plug and Play’s use XML data formats in order to describe the relationship among assets within the repository. DIDL-LITE is a subset of MPEG21 DIDL(Digital item declaration language), these DIDL-lite, and DIDL provides relationship among the assets which are known as Digital Item. This Paper leverage the fact that media resources are described by existing formats such as DIDL and introduces a method which uses this within DASH Standard.
+System Architecture
+Composition of media Presentation:
+CMP consists one added layer for MPD and provides ability to select specific configuration. CMP is a XML document which specifies initial user and device options for user to select.CMP description makes static XML of MPEG-21 DID as dynamic XML.
+CMP enabled DASH:
+The CMP client sends a request to the server. The request/response to the CMP is based on HTTP. As same as the MPD it downloads the configuration and configures based on the requirements of user and device unlike MPD, CMP allows user to select the configuration.After client configures the CMP, requests the MPD in the same way which is used for Dynamic Adaptive Streaming with different representations divided into segments. The MPD contains fully qualified URLS to those segments.  Initially client starts with the lower bit rate segment and able to switch to higher bit rate segments based on download rate of the segments. In this way it achieves DASH.
+Session transfer During DASH 
+General Considerations:  when user decide to transfer session from one device to other, and it should be started from where it is being terminated. User should also be able to reconfigure the initial setup. Session Transfer with MPEG-21:  For the Session Transfer MPEG-21 has introduced Context Digital Item. It describes the state of CMP. Play time and state is stored in CDI. In implementation, first device creates and CDI and send it over the network and second device should download it. Second device configure based on the CMP and CDI downloaded.
+ Implementation: 
+VLC Architecture:
+It describes the VLC architecture built in a highly modular way around vlc core called LibVLC. At each layer it build own module. Each module consists of two major parts. First one is description which is made of macros which describes priority, behavior, capabilities. The Second part of the module is callback part. Which consists of open and close calls.The main layers of VLC is Interface, Access, Demux, Decoder, and output.
+CMP-enabled DASH support for VLC:
+Interface Layer:  At this layer they have added new tab called DASH. When User enters the URL, DASH Tab initializes new CMP Manager Class that will be able to parse CMP. DASH tab provides user to make choices.
+Access Layer:  At this layer new plugin is implemented which is able to handle DASH streams. It is responsible for the selection of representations based on bandwidth.
+Demux layer: VLC do not support DASH delivery format out of box so, Demux is used.
+Session Transfer:
+As mentioned above in Session Transfer with DASH, this section describes the Session transfer in context with VLC.
+
+10)	An Evaluation of Dynamic Adaptive streaming over HTTP in Vehicular Environments
+The streaming over the TCP has became omnipresent in further consequences. Like Netflix, Hulu do not deploy own streaming system but uses internet infrastructure which works better than CDN’s.
+The Assumption were made for not using TCP is not reliable and usage of UDP and RTP for reliable transmission has been proven to be false. As a consistent use of HTTP, The existent Internet infrastructure consisting of caches, CDN, Web proxies can be used. The main benefit was it can easily pass through a fire walls or Network address translation.
+They have evaluated Microsoft smooth Streaming, Adobe HTTP dynamic streaming with simulated bandwidth and it was difficult to trace.YAO evaluated using 3 generated mobile networks. The evaluation used a real world bandwidths. The result of evaluation was dynamic streaming was more suitable than non adaptive streaming.
+Experiments
+The Experiments consisted of four devices evaluation client, bandwidth shaping, network emulation, HTTP server. The main component is bandwidth emulation since it achieves maximum bandwidth for the client with Linux traffic system and hierarchical bucket it adjust the client to available bandwidth every 2second.It controls the networks with Round Trip time.
+Microsoft smooth streaming
+The evaluation for MSS is based on windows7,Microsoft silver light and browser used is Mozilla firefox 7. The server used is windows server 2008 and internet information system IIS. The previous content can be encoded by the IIS Transform Manager. Which transform MP4 files to H.264 smooth streams.  It also creates client server manifest files which are noting but MPD. These manifest do not have some URLS which restricts MSS to IIS web servers. The IIS web server must transform all segments that are sent in each HTTP request. Each request will have a video bit rate and a time stamp that corresponds to a presentation time segment (PTS).The bandwidth emulation provides download time stamp and the buffer level is calculated. All the experiments are started with a higher bandwidth which is 4MB. The quality is increased in a step wise manner. Which increases the quality smoothly.
+Adobe HTTP dynamic Streaming:
+It is based on Ubuntu 11.04,Firefox and open source media Framework. The server    component hosts the flash media server and the package content can be achieved by adobe file packager. The same encoded video can be used for ADS which is used for MSS. ADS doesnot act in stepwise manner as MSS. Most of the time it switches from the higher  to lower representation even if representation are not available for higher time. Even if the bandwidth for the highest representations are available it may not use it and its handles such stalls by increasing playback buffer in a linear way. When stalls occurs, buffer is increased. ADS do not provide smooth playbacks and stalls which irritates user.
+Apple HTTP live streaming
+This HLS uses OS X snow leopard, safari and IIS Transform Manager helps to transform video H.264 smooth streams to apple HTTP live streams. The video will be segmented as same as MSS.HLS is the only one which uses MPEG-2 TS instead of IBMFF. HLS is designed for mobile environments. It also step wise approach.  It can also request more than one segment with each request. Which leads to more efficient connections. HLS does not consider the bandwidth fluctuations in b/w this bundled request.
+Dynamic Adaptive streaming over HTTP:
+MPEG-DASH is based on DASHEncoder, which generates content and DASH complaint MPD. The server for this based on Ubuntu which hosts an apache web server. The DCP has been modified by adding 30 sec buffer to compensate high bandwidth fluctuations and to reconnect it uses HTTP version 1.1. The Adaption algorithm used by DCP measures the download time and average of bitrate.
+When compared to Microsoft and apple, DCP do not use a Step wise approach. It leads to higher average bitrate. Improvement is done by using the HTTP version 1.1 which compensate high RTT in mobile networks. The Average DCP bitrate is increased by 35% approx.
+Comparison
+With the Experiments we can say that Microsoft has highest average bit rate, apple has a less low number of switches but it can utilize bit rate as same as MSS. The Average unsmoothness shows that adobe makes the video not watchable.The MPEG-DASH performs Well with HTTP version 1.1 and achieves second best average bitrate.
+
+11)	Simulation of Adaptive Streaming over HTTP using JW Player
+The video technique that is used for home entertainment delivery and also mobile is DASH and hence many open source embeddable media players evolved. Most ordinary video and audio formats are supported by JW player and it has lots of plugins. Streaming media is made accessible across multiple devices and internet browser as JW players supports Flash and HTML5 by all major web browsers like Google Chrome, Firefox, opera etc. Enhancement can also be done by using flash and java script plugins which helps in allowing customized video delivery. 
+
+
+Simulation Appliance
+A new server accent has been created with a domain name at a datacenter in Texas, in order to simulate Adaptive Streaming over Http. Using the File Transfer Protocol JW player is published in a single webpage named index.html. Among many of the plugins that the JW payer supports, Quality monitor is a real time depicter of video streaming features.
+Simulation Results
+Using Personal Computers, Laptops and net books simulation has been conducted for regular use to view streams of videos. The bit rate is maintained by the JW player but it increases the width of window to render improved quality of viewing.
+
+12)	A VLC Media Player Plugin enabling Dynamic Adaptive Streaming over HTTP
+VLC Media Player:
+VLC media player has a well defined layered architecture. The layers contain an undefined number of modules, correct module will be selected for each individual layer. At the later versions layer has been made a single layer.
+  DASH Plugin:
+DASH plugin is located at stream filter of VLC. DASH plugin consists of four major components and two controller classes. XML component handles the MPD files, HTTP components in the structure handles all the HTTP connections. The current version of the plugin opens a HTTP connections for each individual segment.XML –logic component maintains add logic to the data representation that is provided through XML. The Adaptation logic component is responsible for the adaptation to user preferences or device capabilities like bandwidth etc. it is very easy to change this adaptations without effecting other components.
+Deployment:
+The Deployment consists of three components. They are the content producer, which is responsible for the production of MPD to the CDN, if there is a movie available in different bitrates, DASH could reuse these files because of flexibility provided by the MPD. The content production can be done online or offline. DASH also supports live content preparation. So, content producer adds segments and updates accordingly. In DASH since the logic is on the client side, client decides which segment to be downloaded.
+
+DASH Data Model:
+The DASH data model is hierarchical starting with the MPD.  Each MPD contains periods. Period separates the content. Each period contains groups, which enables the grouping of the representations which are logically together. A period also contains the subset which enables the restriction of combinations of Groups.
+ Segment Indexing:
+The segment indexing in DASH is very flexible.  There are three different ways how a segment can be indexed. The first one is MPD only mechanism in which index will be signaled with in MPD. The Second one MPD describes the Byte ranges. Finally it adds the whole index in the underlying data.
+Deployment Remarks:
+DASH is very flexible but on demand and Live use case have different requirements. The segment duration may be as long as the possible which may be unnecessary. It is also not suitable for live sessions since session need to be divided into multiple segments and high encoding performance is also needed.
+13)	Measuring DASH Streaming Performance from the End Users Perspective Using Neubot
+The Neubot Architecture
+The Neubot Arch consists of Neubot program which will be python and configuration server, test server, discovery server, Collect server. As mentioned above Neubot runs in background and performs test every 30min. Before running a Test instance connect to configuration server, get the webAPI of available tests and selects the test, then it connects to a discovery server and gets the address of the test then the instance is connected to the test server and it keeps a token in the wait queue and token performs the test when it gets its turn in the queue. During this test, test server perform performance metric and store in a local disk.
+The Neubot DASH module
+The Neubot DASH implementation is different from the standard DASH implementation, it do not contain MPD. But the test Server sends the list of available bitrates. The mod_dash consists of mod_dash test server and client. The client connects to the test server and requests the fifteen emulated video segments.
+The Dash test Adaptation Logic
+The Client request the segment suing most conservative bitrate representation 100. After download with 100kb/s, it estimate available bandwidth (EAB) and selects the bitrate. This logic allows to download the next segment with in 2seconds.if the network conditions deteriorate and dash test estimates too much bandwidth is used a new mechanism is applied to reduce the EAB. The Mechanism is as follows:
+if EDT > PLAY_TIME :
+REL_ERR = 1 - EDT / PLAY_TIME
+   EAB = EAB + REL_ERR * EAB
+EAB = max(min_rep_bitrate ,EAB)
+EDT is Elapsed download time,play time is the playtime of the segment
+
+
+
+Description of the Dataset
+Neubot counts about 1000 users every day and slightly high number of IP addresses and performs the tests. The tests performed by Neubot will be 10,000 each day. A single data test lasts for 30sec as it downloads 15segements of 2sec long. Each test result is described with a number of properties that characterize Client and server. After each test, the client results to JSON format and stored at server and once per day this data is fetched from server by M-lab Pipeline and publishes in Google Cloud Storage without any viewing restrictions.
+Dataset Analysis
+A deeper analysis of the data collected in the dataset allows to get client geographic location, time of day and the throughput. The Authorization to publish real address of the client is given to Neubot users. They a used a Figure to explain clients in October 2013. The Neubot schedules two tests per hour. They used a figure to explain the tests run in a day, average downloaded bandwidth, download speed for the operator. They showed this examples as a small sample that the researchers can extract from a Dataset.
+Example of DASH Simulation
+In addition to the analysis of the data collected, dataset measurements can be used to drive simulations that test performance of different rate adaption algorithms. They used a sample data figure to explain arrival time of each byte of the streaming session. For testing they used three adaptation algorithms A) Session Average Bit rate, B) last Segment Bit rate C) moving window average bit rate. The LSB, WAB requests the HRB which is lower than the average bit rate measured. SAB adapt to varying bandwidth at the start later in the middle SAB will be unable to change representation so, user get same video quality. LSB is Contrary to the SAB. In WAB requested representation is computed using a moving average whose length can be chosen for stable video quality.  
+
+14)	 Ultrahigh Definition HEVC DASH Data Set
+UHD content has been a major research focus for audio-visual content providers ranging from camera to display devices, pushing this research into deployment test phases. 2013 has seen a growing numbers of high-resolution, typically achieving UHDTV resolutions, i.e. 3840x2160 pixels. 2013, UHDTV panel manufacturers, especially in Asia, have followed very aggressive price policies, providing a UHDTV at 30 Hz for the same price as FHD(1920x1080) at 60 or 120 Hz. giving an estimated market share of 4% in 2015 (~9 million units) and 8% in 2017 (~21 million units) with the growing consumption of video content on personal devices smart phones or tablets, device manufacturer are also investigating  packing more pixels into personal devices. UHD is not just a matter of pixel resolution; image frequency also plays a major part here. The industry investigates higher frame rate (HFR) video, typically targeting between 50 frames per seconds (fps) up to 120 fps UHD is also a matter of color fidelity from 10 bits per component up to 16 bit per component for High Dynamic Range imaging.
+HEVC and MPEG-DASH for UHD: HEVC the new codec jointly developed by MPEG and ITU is used for the compression challenge of UHD services. HEVC provides specific tools for efficient processing on parallels architectures, Tiles and Wave front Parallel Processing. WPP consists of resetting the CABAC probabilities of the first CTU in each line with the probabilities obtained after processing the second CTU. probabilities obtained after processing the second CTU of the line CABAC encoding is flushed after the last CTU of each row, making the bit stream representing each row of CTU accessible using entry point HEVC delivery over professional broadcasting networks has been showcased several times in 2013, the first live end-to-end transmission chain of HEVC video at the French Open Roland Garros 2013, featuring IPTV, DVB-T2 and MPEG-DASH transmissions of 720p60 content.
+Source Sequence: The sequences provided in the dataset are a professional edit of several sequences shot during the 4Ever project. The edited sequence is an UHDTV 3840x2160 progressive video at 60 Hz, and lasts 8536 frames, which corresponds to 2 minutes, 22 seconds and 226 milliseconds. The sequence has been spatially down-sampled to generate HD (1280x720p60) and Full HD (1920x1080p60) sequences.
+ HEVC Coding: The sequences were encoded in HEVC in a variety of bitrates, using a professional video encoder provided by Ateme. With 4K content encoding, using too short GOPs is extremely costly and results in low quality. It could have been possible to use shorter GOPs at lower resolutions typically half duration. 
+ MPEG-DASH: The data set uses ISO Base Media File Format segments. Each media stream is encapsulated in its own file and there are no multiplexed segments. All media streams are split into segments with same segment duration, each media stream starts with an IDR. Different types of encapsulation are provided in order to test different distribution use casesThey are:
+Live profile: This features one or several complete GOPs per segment, with each segment carried in its own file referenced in the MPD. 
+Live profile with bit stream switching: This format is a variation of the previous one. All sequences are prefixed with dashevc-live-bs-.
+OnDemand profile: This packaging features one or several complete GOPs per sub segment, with all sub segment carried in a single file with a top- level index describing all sub segments in the file. level index describing all sub segments in the file. All sequences are prefixed with dashevc-ondemand-.
+- Main profile: Each segment has an index describing the GOP start offset, and is referred to in the MPD through a segment list using byte-range URLs. All sequences are prefixed with dashevc-main-.
+
+ Dataset Distribution: The dataset is made available at the following URL: http://download.tsi.telecom-paristech.fr/gpac/dataset/dash/uhd.For each encapsulation format, several MPDs, each containing both audio and video, are provided: MPD featuring all representation: $SEQ_PREFIX/$SEQ_PREFIX.mpd - MPD featuring only 60p from 720p to 1080p: $SEQ_PREFIX/$SEQ_PREFIX-p60.mpd$SEQ_PREFIX/$SEQ_PREFIX-4k.mpd- MPD featuring only 10 bit content: All MPDs included in this dataset are conformant to the first edition of the MPEG-DASH standard.
+ Dataset performance: The video decoding is done using the OpenHEVC decoder. The decoder was tested on a workstation computer running Linux (Intel Xeon 16 cores at 2.4 GHz) and on a laptop computer done with several threading configurations: CFG1: single thread used. CFG2: 8 threads for frame-level parallelization: CFG3: WPP processing only, using 8 threads per frameCFG4: WPP processing using 4 threads per frame.
+15)	Conclusion:
+DASH is the accessible multimedia networking technology from user end. Users have access to content distribution networks through which they can access to DASH. Adaptive streaming technology proved to veil the chasm that full media downloading has been performing until recently. The firewall compatible HTTP has been chosen to deliver streaming media and the most adaptive implantations are taking at user end for internet bandwidth. The¬¬¬¬¬ First DASH dataset comprises different genres which is designed for DASH based evaluations where it consists videos from 10 – 90 minutes where every video in this data set has various segment lengths the same with representations which range from 50 kbit/sec and they provide PSNR values for each and every frame of the big buck representations.   To encode this dataset a convenient content generation tool called DASHencoder is used, which also shows the enabled/disabled persistent connections of servers to streaming performance of DASH , they also plan to do research on stream switching algorithms and update dataset like adding other features as adding alternate encodings and audio tracks to videos Now -a -days Video on demand has been emerged and the future of the DASH would be SVC (scalable video coding) and VBR(variable bit rate) with the Evaluation in vehicular environment also proved DASH as efficient. The Evaluation using the Neubot tool, In the article, the problems faced by UDH have been discussed and combination of HEVC and MPEG-DASH has been Explained.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+References:
+1)	Dynamic Adaptive Streaming over HTTP
+Authors: M. G. Michalos, S. P. Kessanidis and S. L. Nalmpantis
+2)	Dynamic Adaptive Streaming over HTTP – Design Principles and Standards
+Author:Thomas Stockhammer
+3)	Dynamic Adaptive Streaming over HTTP Dataset
+Authors: Stefan Lederer, Christopher Müller, and Christian Timmerer
+4)	An Evaluation of Dynamic Adaptive streaming over HTTP in Vehicular Environments
+Authors: Christopher Muller, Stefan Lederer, Christian Timmerer
+5)	Distributed DASH Dataset
+Authors: Stefan Lederer, Christopher Mueller, Christian Timmerer, Cyril Concolato,
+Jean Le Feuvre, Karel Fliegel
+6)	Measuring DASH Streaming Performance from the End Users Perspective Using Neubot
+Authors: Simone Basso, Antonio Servetti, Enrico Masala, Juan Carlos De Martin
+7)	A VLC Media Player Plugin enabling Dynamic Adaptive Streaming over HTTP
+Authors: Chirstopher Muller and Christian Timmerer
+8)	Ultrahigh Definition HEVC DASH Data Set
+Authors: J. Le Feuvre, J-M. Thiesse, M. Parmentier, M. Raulet, C. Daguet
+9)	Env DASH - An Environment-Aware Dynamic Adaptive Streaming over HTTP System
+Authors: Stefan Wilk, Sophie Schonherr, Denny Stohr,WolfgangEffelsberg
+10)	A Test-Bed for Dynamic Adaptive Streaming over HTTP featuring Session Mobility
+Authors: Christopher Muller and Christian Timmerer
+
